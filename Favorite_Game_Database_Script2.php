@@ -8,7 +8,6 @@
 <h1>Favorite Game Database</h1>
 
 <body>
-
 Do you wish to enter a new entry?
 <form action = "Violeta_Solorio_Project4_Script2.php" method = "POST" >
 <input type= 'radio' name = 'answer3' value = 'Yes'> Yes
@@ -21,9 +20,8 @@ Do you wish to enter a new entry?
 <p>Submit<input type = 'submit' name = 'submit' value = 'Click to submit form'></p>
 </form>
 
-
 <h2> Do you wish to delete an entry?</h2>
-<form action = "Violeta_Solorio_Project4_Script2.php" method = "POST">
+<form action = "Favorite_Game_Database_Script2.php" method = "POST">
 <input type= 'radio' name = 'answer4' value = 'Yes'> Yes
 <input type = 'radio' name = 'answer4' value= 'No' checked = "checked">No
 <p>Enter the first name, last name and age of the entry</p>
@@ -36,7 +34,7 @@ Do you wish to enter a new entry?
 <h2> Do you wish to update the game or age of a current setting?</h2>
 <p>Enter the first name, last name and age of the entry along with designated age & game to be updated to</p>
 
-<form action ="Violeta_Solorio_Project4_Script2.php" method ="POST">
+<form action ="Favorite_Game_Database_Script2.php" method ="POST">
 <p>First name<input type = 'text' name = 'update_first' size='20'></p>
 <p> Last name<input type = 'text' name = 'update_last' size='20'></p>
 <p> Age <input type ='number' name = 'update_age' size ='20'></p>
@@ -78,7 +76,6 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 		print"<p>You did not wish to enter a new entry</p>";
 		$issue = true;
 	}
-	
 	//Checks validity of answers submitted to delete an entry
 	if($delete_answer = "Yes"){//If the user answers yes to delete entry
 		if(!empty($_POST['del_first']) && !empty($_POST['del_last']) && !empty($_POST['del_age'])){
@@ -93,7 +90,6 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 		print"<p> You did not wish to delete an entry</p>";
 		$issue2 = true;
 	}
-	
 	//Checks validity of answers submitted to update an entry
 	if($game_answer == "Yes"){//If user answers yes to update age or game
 		if(!empty($_POST['update_first']) && !empty($_POST['update_last']) && !empty($_POST['update_age'])){
@@ -115,10 +111,9 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 	else{//There is no updating submission
 		$issue3 = true;
 	}
-	
 	if(!$issue){//If no issue is detected for insertion
 
-		if( $database = @mysqli_connect('localhost','username','thepassword','project4_database')){//Connects to the database
+		if( $database = @mysqli_connect('localhost','username','thepassword','FB_database')){//Connects to the database
 			if($entry_answer == "Yes"){
 				$query = "INSERT INTO data(id, first_name, last_name, age, game) VALUES(0,'$first','$last', '$age', '$favorite_game')";
 				if(@mysqli_query($database, $query)){//Runs the query
@@ -142,9 +137,8 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 			print"Could not connect to database due to:". mysqli_connect_error();
 		}
 	}
-	
 	if(!$issue2){//If no issue is detected for deletion
-		if($database= @mysqli_connect('localhost','username','thepassword','project4_database')){//Connects to the database
+		if($database= @mysqli_connect('localhost','username','thepassword','FB_database')){//Connects to the database
 			if($delete_answer =="Yes"){
 				$query = "DELETE FROM data WHERE first_name LIKE '%". $del_first."%' AND last_name LIKE '%".$del_last ."%' AND age LIKE '%".$del_age."%' LIMIT 1";
 				$row = mysqli_query($database,$query);
@@ -159,7 +153,7 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 		}
 	}
 	if(!$issue3){//If no issue is detected for updating
-		if($database = @mysqli_connect('localhost','username','thepassword','project4_database')){//Connects to database
+		if($database = @mysqli_connect('localhost','username','thepassword','FB_database')){//Connects to database
 			
 			if($game_answer == "Yes"){//If user answers yes to update game entry
 				$query = "UPDATE data SET game = '$new_game' WHERE first_name LIKE '%".$update_first. "%' AND last_name LIKE '%". $update_last."%' AND age LIKE '%" .$update_age."%' LIMIT 1";
@@ -174,11 +168,8 @@ if($_SERVER['REQUEST_METHOD']== 'POST'){
 			print"Could not connect to database due to:".mysqli_connect_error();
 		}
 	}
-
 	 mysqli_close($database); // Close the connection
 }
-
-
 ?>
 </body>
 </html>
