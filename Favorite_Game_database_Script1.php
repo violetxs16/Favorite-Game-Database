@@ -11,7 +11,7 @@ The following Script will create the following the table: data
 If the tables could not be created a error message will occur
 *
 	//project4_database was created through phpMyAdmin
-	if($database = @mysqli_connect('localhost','username','thepassword', 'project4_database')){//Establishes connection to database & assigns it to variable $database
+	if($database = @mysqli_connect('localhost','username','thepassword', 'FB_database')){//Establishes connection to database & assigns it to variable $database
 		print "Connected!";
 		$query = 'CREATE TABLE data(id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, first_name TEXT NOT NULL, last_name TEXT NOT NULL, age INT NOT NULL, game TEXT NOT NULL )';
 		if(@mysqli_query($database, $query)){
